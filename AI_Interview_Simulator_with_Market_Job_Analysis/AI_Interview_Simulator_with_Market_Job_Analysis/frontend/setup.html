@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Setup — MAAI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">M<span>AA</span>I</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="setup.html" class="active">Setup</a></li>
+      <li><a href="interview.html">Interview</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <a href="interview.html" class="btn-primary">Start Interview</a>
+  </nav>
+
+  <section class="setup-page">
+    <div class="setup-header">
+      <div class="section-label">PRE-INTERVIEW</div>
+      <h1>Candidate <span class="gradient-text">Setup</span></h1>
+      <p>Configure your session before meeting the AI interviewer.</p>
+    </div>
+
+    <div class="setup-grid">
+
+      <!-- LEFT: FORM -->
+      <div class="setup-form-panel">
+
+        <!-- STEP 1 -->
+        <div class="setup-step active" id="step1">
+          <div class="step-header">
+            <span class="step-badge">01</span>
+            <h3>Personal Info</h3>
+          </div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="candidateName" placeholder="e.g. Rishika Sinha" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="candidateEmail" placeholder="e.g. rishika@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Target Role</label>
+            <select id="targetRole">
+              <option value="">Select a role</option>
+              <option value="software_engineer">Software Engineer</option>
+              <option value="data_scientist">Data Scientist</option>
+              <option value="ml_engineer">ML Engineer</option>
+              <option value="finance_analyst">Finance Analyst</option>
+              <option value="product_manager">Product Manager</option>
+              <option value="devops">DevOps Engineer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Experience Level</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="level" value="fresher" checked/> Fresher</label>
+              <label class="radio-label"><input type="radio" name="level" value="junior"/> 1–2 Years</label>
+              <label class="radio-label"><input type="radio" name="level" value="mid"/> 3–5 Years</label>
+              <label class="radio-label"><input type="radio" name="level" value="senior"/> 5+ Years</label>
+            </div>
+          </div>
+          <button class="btn-primary full" onclick="nextStep(2)">Continue →</button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="setup-step" id="step2">
+          <div class="step-header">
+            <span class="step-badge">02</span>
+            <h3>Resume Upload</h3>
+          </div>
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('resumeFile').click()">
+            <div class="upload-icon">📄</div>
+            <p>Click to upload your Resume</p>
+            <span>PDF, DOC, DOCX — max 5MB</span>
+            <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" style="display:none" onchange="handleFileUpload(this)"/>
+          </div>
+          <div class="upload-status" id="uploadStatus" style="display:none">
+            <span class="status-icon">✅</span>
+            <span id="uploadedFileName"></span>
+          </div>
+          <div class="skill-match-preview" id="skillPreview" style="display:none">
+            <div class="skill-match-label">Market Skill Match Preview</div>
+            <div class="skill-bars">
+              <div class="skill-row"><span>Python</span><div class="bar"><div class="fill" style="width:90%"></div></div><span class="pct">90%</span></div>
+              <div class="skill-row"><span>Machine Learning</span><div class="bar"><div class="fill" style="width:75%"></div></div><span class="pct">75%</span></div>
+              <div class="skill-row"><span>SQL</span><div class="bar"><div class="fill orange" style="width:60%"></div></div><span class="pct">60%</span></div>
+              <div class="skill-row"><span>Docker</span><div class="bar"><div class="fill red" style="width:30%"></div></div><span class="pct">30%</span></div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-outline" onclick="nextStep(1)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(3)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="setup-step" id="step3">
+          <div class="step-header">
+            <span class="step-badge">03</span>
+            <h3>Camera & Mic Check</h3>
+          </div>
+          <div class="device-check">
+            <div class="device-item" id="camCheck">
+              <span class="device-icon">📷</span>
+              <span class="device-name">Webcam</span>
+              <span class="device-status pending" id="camStatus">Checking...</span>
+            </div>
+            <div class="device-item" id="micCheck">
+              <span class="device-icon">🎙️</span>
+              <span class="device-name">Microphone</span>
+              <span class="device-status pending" id="micStatus">Checking...</span>
+            </div>
+          </div>
+          <div class="camera-preview-box">
+            <video id="cameraPreview" autoplay muted playsinline></video>
+            <div class="cam-overlay">
+              <div class="cam-corner tl"></div>
+              <div class="cam-corner tr"></div>
+              <div class="cam-corner bl"></div>
+              <div class="cam-corner br"></div>
+            </div>
+          </div>
+          <button class="btn-secondary full" id="checkDevicesBtn" onclick="checkDevices()">
+            🔍 Check Devices
+          </button>
+          <div class="btn-row" style="margin-top:16px">
+            <button class="btn-outline" onclick="nextStep(2)">← Back</button>
+            <button class="btn-primary" id="startBtn" onclick="goToInterview()">Start Interview →</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: PROGRESS + SUMMARY -->
+      <div class="setup-info-panel">
+        <div class="progress-steps">
+          <div class="prog-step done" id="prog1">
+            <div class="prog-dot">1</div>
+            <div class="prog-label">Personal Info</div>
+          </div>
+          <div class="prog-line"></div>
+          <div class="prog-step" id="prog2">
+            <div class="prog-dot">2</div>
+            <div class="prog-label">Resume Upload</div>
+          </div>
+          <div class="prog-line"></div>
+          <div class="prog-step" id="prog3">
+            <div class="prog-dot">3</div>
+            <div class="prog-label">Device Check</div>
+          </div>
+        </div>
+
+        <div class="session-summary">
+          <div class="summary-title">Session Config</div>
+          <div class="summary-row"><span>Duration</span><strong>20–30 min</strong></div>
+          <div class="summary-row"><span>Questions</span><strong>10–15 adaptive</strong></div>
+          <div class="summary-row"><span>Metrics Tracked</span><strong>6 behavioral</strong></div>
+          <div class="summary-row"><span>Model</span><strong>LLaMA 3 8B</strong></div>
+          <div class="summary-row"><span>Speech Engine</span><strong>ElevenLabs</strong></div>
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-title">💡 Tips for best results</div>
+          <ul>
+            <li>Use a quiet environment</li>
+            <li>Maintain eye contact with camera</li>
+            <li>Speak clearly and at a natural pace</li>
+            <li>Good lighting from the front</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="setup.js"></script>
+</body>
+</html>

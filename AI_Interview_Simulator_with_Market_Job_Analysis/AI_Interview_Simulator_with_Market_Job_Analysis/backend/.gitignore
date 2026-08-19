@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environment — NEVER commit this
+venv/
+env/
+.env
+
+# Database
+*.db
+*.sqlite3
+
+# ML Models (large binary files)
+models/*.pkl
+models/*.pth
+models/*.h5
+
+# Logs
+*.log
+logs/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp audio/image files
+*.wav
+*.mp3
+*.mp4
+*.jpg
+*.png
+temp/

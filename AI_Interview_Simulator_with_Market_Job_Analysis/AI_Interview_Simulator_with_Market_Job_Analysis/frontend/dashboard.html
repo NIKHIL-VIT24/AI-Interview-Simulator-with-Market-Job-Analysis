@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — MAAI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">M<span>AA</span>I</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="interview.html">Interview</a></li>
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+    </ul>
+    <a href="setup.html" class="btn-primary">New Session</a>
+  </nav>
+
+  <section class="dashboard-page">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+      <div>
+        <div class="section-label">RECRUITER DASHBOARD</div>
+        <h1>Candidate <span class="gradient-text">Report</span></h1>
+        <p class="dashboard-meta">Rishika Sinha · ML Engineer · Session ID: #2024-1107</p>
+      </div>
+      <button class="btn-outline" onclick="window.print()">📥 Export Report</button>
+    </div>
+
+    <!-- HIRING SCORE HERO -->
+    <div class="hiring-score-card">
+      <div class="hs-left">
+        <div class="hs-label">HIRING PROBABILITY SCORE</div>
+        <div class="hs-ring-container">
+          <svg class="hs-ring" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="80" class="ring-bg"/>
+            <circle cx="100" cy="100" r="80" class="ring-fill" id="hiringRingFill"
+              stroke-dasharray="502" stroke-dashoffset="502"/>
+          </svg>
+          <div class="hs-score-center">
+            <span class="hs-number" id="hiringScore">0</span>
+            <span class="hs-percent">%</span>
+          </div>
+        </div>
+        <div class="hs-verdict" id="hiringVerdict">Calculating...</div>
+      </div>
+      <div class="hs-right">
+        <div class="hs-breakdown">
+          <div class="hs-item">
+            <span class="hs-item-label">Technical Score (T)</span>
+            <div class="bar wide"><div class="fill" id="techScoreBar" style="width:0%"></div></div>
+            <span class="hs-item-val" id="techScoreVal">0%</span>
+          </div>
+          <div class="hs-item">
+            <span class="hs-item-label">Resume Score (R)</span>
+            <div class="bar wide"><div class="fill orange" id="resumeScoreBar" style="width:0%"></div></div>
+            <span class="hs-item-val" id="resumeScoreVal">0%</span>
+          </div>
+          <div class="hs-item">
+            <span class="hs-item-label">Behavioral Score (B)</span>
+            <div class="bar wide"><div class="fill green" id="behaviorScoreBar" style="width:0%"></div></div>
+            <span class="hs-item-val" id="behaviorScoreVal">0%</span>
+          </div>
+          <div class="hs-item">
+            <span class="hs-item-label">Market Skill Match (M)</span>
+            <div class="bar wide"><div class="fill" id="marketScoreBar" style="width:0%"></div></div>
+            <span class="hs-item-val" id="marketScoreVal">0%</span>
+          </div>
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">SCORING FORMULA</div>
+          <code>P(Hire) = σ(β₁ + β₂·B + β₃·R + β₄·MaxD + β₅·EC + β₆·SR)</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS GRID -->
+    <div class="metrics-grid">
+
+      <!-- BEHAVIORAL -->
+      <div class="metrics-card">
+        <div class="mc-title">Behavioral Analysis</div>
+        <div class="beh-metrics">
+          <div class="beh-item">
+            <div class="beh-circle" id="eyeCircle">
+              <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" class="ring-bg"/>
+                <circle cx="40" cy="40" r="32" class="ring-fill" stroke-dasharray="201" stroke-dashoffset="201" id="eyeRing"/>
+              </svg>
+              <span id="eyePct">0%</span>
+            </div>
+            <div class="beh-label">Eye Contact</div>
+          </div>
+          <div class="beh-item">
+            <div class="beh-circle orange">
+              <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" class="ring-bg"/>
+                <circle cx="40" cy="40" r="32" class="ring-fill orange" stroke-dasharray="201" stroke-dashoffset="201" id="speechRing"/>
+              </svg>
+              <span id="speechPct">0</span>
+            </div>
+            <div class="beh-label">Avg Speech Rate (wpm)</div>
+          </div>
+          <div class="beh-item">
+            <div class="beh-circle green">
+              <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" class="ring-bg"/>
+                <circle cx="40" cy="40" r="32" class="ring-fill green" stroke-dasharray="201" stroke-dashoffset="201" id="emotionRing"/>
+              </svg>
+              <span id="emotionPct">0%</span>
+            </div>
+            <div class="beh-label">Emotion Stability</div>
+          </div>
+        </div>
+        <div class="beh-table">
+          <div class="bt-row header"><span>Metric</span><span>Score</span><span>Weight</span></div>
+          <div class="bt-row"><span>Speech Rate (SR)</span><span id="srVal">--</span><span>0.20</span></div>
+          <div class="bt-row"><span>Pause Duration (PD)</span><span id="pdVal">--</span><span>0.15</span></div>
+          <div class="bt-row"><span>Filler Count (FC)</span><span id="fcVal">--</span><span>0.15</span></div>
+          <div class="bt-row"><span>Eye Contact (EC)</span><span id="ecVal">--</span><span>0.20</span></div>
+          <div class="bt-row"><span>Head Movement Var</span><span id="bmVal">--</span><span>0.15</span></div>
+          <div class="bt-row"><span>Emotion Stability</span><span id="esVal">--</span><span>0.15</span></div>
+        </div>
+      </div>
+
+      <!-- RESUME ANALYSIS -->
+      <div class="metrics-card">
+        <div class="mc-title">Resume & Market Analysis</div>
+        <div class="resume-formula">
+          <code>R = 0.4·M + 0.3·E + 0.3·P</code>
+        </div>
+        <div class="skill-match-list" id="skillMatchList">
+          <div class="sm-row">
+            <span>Python</span>
+            <div class="bar"><div class="fill" style="width:90%"></div></div>
+            <span class="pct green">✓ Match</span>
+          </div>
+          <div class="sm-row">
+            <span>Machine Learning</span>
+            <div class="bar"><div class="fill" style="width:80%"></div></div>
+            <span class="pct green">✓ Match</span>
+          </div>
+          <div class="sm-row">
+            <span>SQL</span>
+            <div class="bar"><div class="fill orange" style="width:65%"></div></div>
+            <span class="pct orange">~ Partial</span>
+          </div>
+          <div class="sm-row">
+            <span>Docker</span>
+            <div class="bar"><div class="fill red" style="width:25%"></div></div>
+            <span class="pct red">✗ Gap</span>
+          </div>
+          <div class="sm-row">
+            <span>Kubernetes</span>
+            <div class="bar"><div class="fill red" style="width:10%"></div></div>
+            <span class="pct red">✗ Gap</span>
+          </div>
+        </div>
+        <div class="market-match-score">
+          Market Skill Match (M): <strong id="marketM">0.72</strong>
+        </div>
+      </div>
+
+      <!-- QUESTION PERFORMANCE -->
+      <div class="metrics-card full-width">
+        <div class="mc-title">Question-by-Question Performance</div>
+        <div class="q-table">
+          <div class="qt-header">
+            <span>#</span>
+            <span>Question</span>
+            <span>Difficulty</span>
+            <span>Score</span>
+            <span>Time</span>
+            <span>Status</span>
+          </div>
+          <div class="qt-row" id="qtBody">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ADAPTIVE DIFFICULTY CHART -->
+      <div class="metrics-card">
+        <div class="mc-title">Difficulty Progression</div>
+        <div class="diff-chart" id="diffChart">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="diff-rule">
+          <code>D(t+1) = min(4, Dt+1) if St &gt; 85</code>
+          <code>D(t+1) = max(1, Dt−1) if St &lt; 50</code>
+        </div>
+      </div>
+
+      <!-- RECOMMENDATIONS -->
+      <div class="metrics-card">
+        <div class="mc-title">AI Recommendations</div>
+        <div class="reco-list">
+          <div class="reco-item strength">
+            <div class="reco-icon">💪</div>
+            <div>
+              <div class="reco-type">Strength</div>
+              <div class="reco-text">Strong Python and ML fundamentals demonstrated across multiple questions.</div>
+            </div>
+          </div>
+          <div class="reco-item warning">
+            <div class="reco-icon">⚠️</div>
+            <div>
+              <div class="reco-type">Improve</div>
+              <div class="reco-text">Reduce filler words (um/uh). Detected 12 instances during the session.</div>
+            </div>
+          </div>
+          <div class="reco-item warning">
+            <div class="reco-icon">📚</div>
+            <div>
+              <div class="reco-type">Skill Gap</div>
+              <div class="reco-text">Docker and Kubernetes skills are trending. Consider upskilling to close market gap.</div>
+            </div>
+          </div>
+          <div class="reco-item strength">
+            <div class="reco-icon">👁️</div>
+            <div>
+              <div class="reco-type">Strength</div>
+              <div class="reco-text">Excellent eye contact maintained throughout the session (82%).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end metrics-grid -->
+
+  </section>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

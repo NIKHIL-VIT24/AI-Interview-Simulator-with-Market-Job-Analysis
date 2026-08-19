@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MAAI — Market Aware Adaptive Interviewing AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-logo">M<span>AA</span>I</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="interview.html">Interview</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <a href="setup.html" class="btn-primary">Start Interview</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="grid-overlay"></div>
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        AI-Powered · Market-Aware · Adaptive
+      </div>
+      <h1 class="hero-title">
+        Interview <br/>
+        <span class="gradient-text">Intelligently.</span>
+      </h1>
+      <p class="hero-desc">
+        A multimodal AI interview system that adapts to live job market trends,
+        evaluates your behavioral signals, and predicts your hiring probability in real time.
+      </p>
+      <div class="hero-cta">
+        <a href="setup.html" class="btn-primary large">Begin Session</a>
+        <a href="dashboard.html" class="btn-outline large">View Dashboard</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">98%</span>
+          <span class="stat-label">Market Aligned</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">3D</span>
+          <span class="stat-label">AI Interviewer</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Behavioral Metrics</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="avatar-card">
+        <div class="avatar-screen">
+          <div class="avatar-face">
+            <div class="eye left-eye"><div class="pupil"></div></div>
+            <div class="eye right-eye"><div class="pupil"></div></div>
+            <div class="mouth"></div>
+          </div>
+          <div class="scan-line"></div>
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+        </div>
+        <div class="avatar-info">
+          <span class="ai-label">AI INTERVIEWER</span>
+          <span class="ai-status"><span class="pulse"></span> ONLINE</span>
+        </div>
+        <div class="metrics-bar">
+          <div class="metric-item">
+            <span>Eye Contact</span>
+            <div class="bar"><div class="fill" style="width:82%"></div></div>
+          </div>
+          <div class="metric-item">
+            <span>Speech Rate</span>
+            <div class="bar"><div class="fill" style="width:67%"></div></div>
+          </div>
+          <div class="metric-item">
+            <span>Confidence</span>
+            <div class="bar"><div class="fill orange" style="width:91%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="section-label">CORE MODULES</div>
+    <h2 class="section-title">Every angle. <span class="gradient-text">Evaluated.</span></h2>
+    <div class="features-grid">
+      <div class="feature-card" data-delay="0">
+        <div class="feature-icon">🧠</div>
+        <h3>Adaptive LLaMA Engine</h3>
+        <p>LLaMA 3 8B dynamically adjusts question difficulty based on your real-time performance score.</p>
+        <div class="feature-tag">LLaMA 3 · Q4 Quantized</div>
+      </div>
+      <div class="feature-card" data-delay="1">
+        <div class="feature-icon">📡</div>
+        <h3>Live Market Intelligence</h3>
+        <p>Questions are aligned with trending skills fetched from live job APIs like Adzuna in real time.</p>
+        <div class="feature-tag">Adzuna API · Web Scraping</div>
+      </div>
+      <div class="feature-card" data-delay="2">
+        <div class="feature-icon">👁️</div>
+        <h3>Behavioral Analysis</h3>
+        <p>Eye contact, speech rate, filler words, and emotional stability are tracked and scored.</p>
+        <div class="feature-tag">MediaPipe · EfficientNet-B0</div>
+      </div>
+      <div class="feature-card" data-delay="3">
+        <div class="feature-icon">🎙️</div>
+        <h3>Speech Processing</h3>
+        <p>Faster-Whisper transcribes your answers; ElevenLabs gives the AI interviewer a human voice.</p>
+        <div class="feature-tag">Whisper · ElevenLabs</div>
+      </div>
+      <div class="feature-card" data-delay="4">
+        <div class="feature-icon">📊</div>
+        <h3>Hiring Probability Score</h3>
+        <p>XGBoost model combines technical, behavioral, and resume metrics into a single predictive score.</p>
+        <div class="feature-tag">XGBoost · Logistic Regression</div>
+      </div>
+      <div class="feature-card" data-delay="5">
+        <div class="feature-icon">🧑‍💼</div>
+        <h3>Recruiter Dashboard</h3>
+        <p>A detailed analytics view with all scores, behavioral breakdowns, and skill gap reports.</p>
+        <div class="feature-tag">PostgreSQL · FastAPI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <div class="section-label">PROCESS FLOW</div>
+    <h2 class="section-title">How it <span class="gradient-text">works.</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Upload Resume</h3>
+          <p>System parses your resume and computes market skill match against live job trends.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>AI Interviews You</h3>
+          <p>3D avatar asks adaptive questions while webcam and mic track your behavior.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Get Your Score</h3>
+          <p>Receive a detailed Hiring Probability report with actionable insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">
+      <div class="nav-logo">M<span>AA</span>I</div>
+      <p>Market Aware Adaptive Interviewing AI</p>
+    </div>
+    <div class="footer-right">
+      <span>VIT University · Project Exhibition II · 2024</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

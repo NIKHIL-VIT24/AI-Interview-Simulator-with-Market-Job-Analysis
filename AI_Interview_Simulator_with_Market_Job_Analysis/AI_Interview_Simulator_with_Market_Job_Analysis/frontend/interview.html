@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interview Room — MAAI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="interview-body">
+
+  <!-- TOP BAR -->
+  <div class="interview-topbar">
+    <div class="topbar-left">
+      <div class="nav-logo small">M<span>AA</span>I</div>
+      <div class="session-info">
+        <span class="rec-dot"></span>
+        <span>Session Active</span>
+      </div>
+    </div>
+    <div class="topbar-center">
+      <div class="question-counter">
+        Question <span id="currentQ">1</span> of <span id="totalQ">10</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:10%"></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="timer-box">
+        <span class="timer-icon">⏱</span>
+        <span id="timer">00:00</span>
+      </div>
+      <button class="btn-danger-sm" onclick="endSession()">End Session</button>
+    </div>
+  </div>
+
+  <!-- MAIN INTERVIEW AREA -->
+  <div class="interview-main">
+
+    <!-- LEFT: AI AVATAR PANEL -->
+    <div class="avatar-panel">
+      <div class="avatar-container">
+        <div class="avatar-screen large">
+          <div class="avatar-face large">
+            <div class="eye left-eye"><div class="pupil"></div></div>
+            <div class="eye right-eye"><div class="pupil"></div></div>
+            <div class="mouth" id="avatarMouth"></div>
+          </div>
+          <div class="scan-line"></div>
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+          <div class="avatar-speaking-indicator" id="speakingIndicator">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+        <div class="avatar-nameplate">
+          <span>ARIA — AI Interviewer</span>
+          <span class="ai-status-label" id="avatarStatus">Listening...</span>
+        </div>
+      </div>
+
+      <!-- QUESTION BOX -->
+      <div class="question-box">
+        <div class="question-tag">
+          <span id="difficultyTag">MEDIUM</span>
+          <span id="categoryTag">TECHNICAL</span>
+        </div>
+        <p class="question-text" id="questionText">
+          Can you explain the difference between supervised and unsupervised learning, and give an example of each?
+        </p>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div class="interview-nav">
+        <button class="btn-outline sm" onclick="repeatQuestion()">🔁 Repeat</button>
+        <button class="btn-primary sm" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+      </div>
+    </div>
+
+    <!-- CENTER: TRANSCRIPT -->
+    <div class="transcript-panel">
+      <div class="panel-title">
+        <span>Live Transcript</span>
+        <span class="mic-indicator" id="micIndicator">🎙️ Listening</span>
+      </div>
+      <div class="transcript-box" id="transcriptBox">
+        <div class="transcript-placeholder">
+          Your spoken answer will appear here in real time...
+        </div>
+      </div>
+      <div class="transcript-controls">
+        <button class="btn-rec" id="recordBtn" onclick="toggleRecording()">
+          <span class="rec-circle"></span> Start Recording
+        </button>
+        <button class="btn-outline sm" onclick="clearTranscript()">Clear</button>
+      </div>
+      <div class="answer-quality">
+        <div class="quality-label">Answer Analysis</div>
+        <div class="quality-bars">
+          <div class="q-bar-row">
+            <span>Relevance</span>
+            <div class="bar"><div class="fill" id="relevanceBar" style="width:0%"></div></div>
+          </div>
+          <div class="q-bar-row">
+            <span>Depth</span>
+            <div class="bar"><div class="fill" id="depthBar" style="width:0%"></div></div>
+          </div>
+          <div class="q-bar-row">
+            <span>Clarity</span>
+            <div class="bar"><div class="fill orange" id="clarityBar" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: BEHAVIORAL METRICS -->
+    <div class="metrics-panel">
+      <div class="panel-title">Behavioral Metrics</div>
+
+      <!-- CAMERA FEED -->
+      <div class="candidate-cam">
+        <video id="candidateVideo" autoplay muted playsinline></video>
+        <div class="face-box" id="faceBox">
+          <div class="face-corner ftl"></div>
+          <div class="face-corner ftr"></div>
+          <div class="face-corner fbl"></div>
+          <div class="face-corner fbr"></div>
+        </div>
+        <div class="cam-label">You</div>
+      </div>
+
+      <!-- LIVE METRICS -->
+      <div class="live-metrics">
+        <div class="live-metric">
+          <div class="lm-label">Eye Contact</div>
+          <div class="lm-value" id="eyeContactVal">--</div>
+          <div class="bar"><div class="fill" id="eyeBar" style="width:0%"></div></div>
+        </div>
+        <div class="live-metric">
+          <div class="lm-label">Speech Rate</div>
+          <div class="lm-value" id="speechRateVal">-- wpm</div>
+          <div class="bar"><div class="fill orange" id="speechBar" style="width:0%"></div></div>
+        </div>
+        <div class="live-metric">
+          <div class="lm-label">Emotion</div>
+          <div class="lm-value" id="emotionVal">Neutral</div>
+          <div class="emotion-chips" id="emotionChips">
+            <span class="chip active">😐 Neutral</span>
+            <span class="chip">😊 Confident</span>
+            <span class="chip">😟 Nervous</span>
+          </div>
+        </div>
+        <div class="live-metric">
+          <div class="lm-label">Filler Words</div>
+          <div class="lm-value red" id="fillerVal">0</div>
+          <div class="filler-list" id="fillerList">
+            <span class="filler-tag">um: 0</span>
+            <span class="filler-tag">uh: 0</span>
+            <span class="filler-tag">like: 0</span>
+          </div>
+        </div>
+        <div class="live-metric">
+          <div class="lm-label">Confidence Score</div>
+          <div class="lm-value green" id="confidenceVal">0%</div>
+          <div class="bar"><div class="fill green" id="confidenceBar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- CURRENT SESSION SCORE -->
+      <div class="session-score-box">
+        <div class="ss-label">Session Score</div>
+        <div class="ss-value" id="sessionScore">0</div>
+        <div class="ss-sublabel">/ 100</div>
+        <div class="difficulty-label">Difficulty: <span id="currentDifficulty">Level 2</span></div>
+      </div>
+    </div>
+
+  </div><!-- end interview-main -->
+
+  <!-- END SESSION MODAL -->
+  <div class="modal-overlay" id="endModal" style="display:none">
+    <div class="modal-box">
+      <h2>End This Session?</h2>
+      <p>Your progress will be saved and you'll be redirected to your results dashboard.</p>
+      <div class="modal-btns">
+        <button class="btn-outline" onclick="closeModal()">Continue Interview</button>
+        <a href="dashboard.html" class="btn-primary">View Results</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="interview.js"></script>
+</body>
+</html>
